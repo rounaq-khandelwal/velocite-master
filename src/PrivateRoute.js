@@ -1,6 +1,6 @@
 import { Route, nav } from 'react-router-dom';
 import { useAuth } from './AuthContext';
-
+import { Redirect } from 'aws-sdk/clients/s3';
 export function PrivateRoute({ component: Component, ...rest }) {
   const { authenticated } = useAuth();
 
@@ -13,6 +13,5 @@ export function PrivateRoute({ component: Component, ...rest }) {
     />
   );
 }
-
 
 export default PrivateRoute;

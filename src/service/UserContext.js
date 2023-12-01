@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Redirect } from 'react-router-dom';
+
 import { isAuthenticated } from './Authservice';
-import ResetPassword from '../component/User/ResetPassword';
 
 import Login from '../component/User/Login';
 

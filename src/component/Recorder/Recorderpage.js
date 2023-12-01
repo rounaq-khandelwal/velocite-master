@@ -3,9 +3,7 @@ Reference :: https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Record
 */
 
 import './RecorderPage.scss';
-import { useEffect, useState, useContext} from 'react';
-import UserContext from '../../service/UserContext';
-
+import { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
 import Header from '../Header/Header';
 
@@ -13,7 +11,6 @@ let mediaRecorder;
 let audioCtx;
 
 function RecorderPage() {
-
   const [state, setState] = useState({
     startAnalysis: true,
     recording: false,
@@ -24,15 +21,26 @@ function RecorderPage() {
     audioFile: null,
   });
 
-  const textContent = 'Hello, welcome. The history of chess began in India during the Gupta Empire, where its early form in the 6th century CE was known as chaturanga, which translates as "four divisions of the military" – infantry, cavalry, elephants, and chariotry, represented by the pieces that would evolve into the modern pawn, knight, bishop, and rook, respectively.s chaturanga, which translates as "four divisions of the military" – infantry, cavalry, elephants, and chariotry, represented by the pieces that would evolve into the modern pawn, knight, bishop, and rook, respectively.'
+  const textContent =
+    'When the sunlight strikes raindrops in the air, they act as a prism  and form a rainbow. The rainbow is a division of white light into many beautiful colors. These take the shape of a long round arch, with its path high above, and its two ends apparently beyond the horizon. There is, according to legend, a boiling pot of gold at one end. People look, but no one ever finds it. When a man looks for something beyond his reach, his friends say he is looking for the pot of gold at the end of the rainbow.';
+
   const [streamData, setStreamData] = useState();
-  var albumBucketName = 'brainiteltestuser';
-  var bucketRegion = 'us-east-1';
-  var IdentityPoolId = 'us-east-1:3dea756b-4538-44d0-af01-d6afbd0f7f8e';
+
+  var albumBucketName = 'testing-react-app-bic';
+  var bucketRegion = 'ap-south-1';
+  var IdentityPoolIdt = 'ap-south-1:51ca1785-dd61-4db1-8958-7463e1b16b5f';
 
   AWS.config.region = bucketRegion; // Region
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: IdentityPoolId,
+    IdentityPoolId: IdentityPoolIdt,
+  });
+  AWS.config.update({
+    region: bucketRegion,
+    apiVersion: 'latest',
+    credentials: {
+      accessKeyId: 'AKIASKXMULHP5J2QUJWF',
+      secretAccessKey: '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',
+    },
   });
 
   var s3 = new AWS.S3({
@@ -41,10 +49,8 @@ function RecorderPage() {
   });
 
   useEffect(() => {
-     
-    if (navigator.mediaDevices.getUserMedia) {
+    if (navigator.mediaDevices.getUserMedia()) {
       console.log('getUserMedia supported.');
-
       const constraints = { audio: true };
       let chunks = [];
 
@@ -78,15 +84,12 @@ function RecorderPage() {
       let onError = function (err) {
         console.log('The following error occured: ' + err);
       };
-
       navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
+      // .catch(onError);
     } else {
       console.log('getUserMedia not supported on your browser!');
     }
   }, []);
-
-
- 
 
   let analyser, dataArray, bufferLength;
   const visualize = (stream) => {
@@ -183,7 +186,7 @@ function RecorderPage() {
       if (err) {
         console.log(err, err.stack);
       } else {
-        console.log('sucess');
+        console.log('success');
       }
     });
     setState((state) => ({
@@ -195,12 +198,12 @@ function RecorderPage() {
 
   const getUserInfo = () => {
     return JSON.parse(localStorage.getItem('userObject'));
-  }
+  };
 
   const getFileName = () => {
-    const userInfo= getUserInfo();
-    let id =userInfo?.userId; 
-    
+    const userInfo = getUserInfo();
+    let id = userInfo?.userId;
+
     const today = new Date();
     const yy = today.getFullYear().toString().substr(-2);
     let mm = today.getMonth() + 1; // Months start at 0!
@@ -229,11 +232,13 @@ function RecorderPage() {
 
   const [result, setResult] = useState([]);
   const checkResults = () => {
-    const userInfo=getUserInfo();
-    let id =userInfo?.userId;
+    const userInfo = getUserInfo();
+    let id = userInfo?.userId;
     s3.listObjects({ Prefix: id }, function (err, data) {
       if (err) {
-        return alert('There was an error viewing your album: ' + err.message);
+        return alert(
+          'There was a brutal error viewing your album: ' + err.message
+        );
       } else {
         console.log('list data--');
         console.log(data);
@@ -280,7 +285,6 @@ function RecorderPage() {
       if (err) {
         return alert('There was an error viewing your album: ' + err.message);
       } else {
-
         var blobStore = new Blob([data.Body], { type: 'application/pdf' });
         if (window.navigator && window.navigator.msSaveOrOpenBlob) {
           window.navigator.msSaveOrOpenBlob(blobStore);
@@ -307,12 +311,13 @@ function RecorderPage() {
           <div className="first">
             <h1 className="head">Welcome {}</h1>
             <div className="para">
-              With the help of our Speech Analysis Tool, you can analyse your
-              health score and get results so that you can decide next steps.
+              With the help of our Speech Analysis AI and Machine Learning Tool,
+              you can check your Happiness Index and get results in pdf format,
+              so that you can decide next steps.
             </div>
 
             <button className="button" onClick={analysisHandler}>
-              Start Analysis
+              Click To Begin
             </button>
 
             <button className="button-secondary" onClick={checkResults}>
@@ -330,8 +335,8 @@ function RecorderPage() {
           <div className="first">
             <h1 className="head">Start Analysis</h1>
             <div className="para">
-              Click the Record button and read the text. Once done, you can
-              click the stop button.
+              Kindly allow the microphone to access. Click the Record button and
+              read the text. Once done, you can click the stop button.
             </div>
             <div
               style={{
@@ -340,22 +345,22 @@ function RecorderPage() {
                 padding: '25px 25px 0px',
               }}
             >
-              {/* <marquee style={{ border: '2px solid black' }}> */}
-                {state?.recording ?
-                  <div
-                    className="myRecordScrollBox"
-                  >
-                    <marquee direction="left" className="marquee">
+              {state.recording ? (
+                <div>
+                  <div className="para2">READ ALOUD THE FOLLOWING LINES</div>
+                  <div className="myRecordScrollBox">
+                    <marquee
+                      direction="up"
+                      className="marquee"
+                      scrollamount="1"
+                    >
                       <div className="marqueeText">{textContent}</div>
                     </marquee>
-                  </div> :
-                  <div
-                    className="myBox"
-                  >
-                    {textContent}
-                  </div>}
-              {/* </marquee> */}
-
+                  </div>
+                </div>
+              ) : (
+                <div className="myBox">{textContent}</div>
+              )}
               {state.recording ? (
                 <>
                   <canvas
@@ -370,9 +375,6 @@ function RecorderPage() {
                       stopRecording();
                     }}
                   >
-                    {/* <div>
-                    <BsRecordBtn value={{ color: 'red' }} />
-                  </div> */}
                     <div>Stop</div>
                   </button>
                 </>
@@ -397,7 +399,10 @@ function RecorderPage() {
           <div></div>
           <div className="first">
             <h1 className="head">Recording Complete</h1>
-            <div className="para">Your Audio note is ready.</div>
+            <div className="para">
+              Your speech is ready for testing, please listen to it. If not
+              audible, please record it again.
+            </div>
             <audio id="audioEle" className="audio" />
             <button className="button" onClick={submitHandler}>
               Submit for Analysis
@@ -420,7 +425,10 @@ function RecorderPage() {
               We will analyze the recording and share analysis with you shortly.
               Please check Results section after some time.
             </div>
-
+            {/* <div className="FeedbackForm">
+              <h1>Feedback</h1>
+              <FeedbackForm />
+            </div> */}
             <button className="button" onClick={closeHandler}>
               Close
             </button>
@@ -434,16 +442,17 @@ function RecorderPage() {
           <div className="first">
             <h1 className="head">View Analysis Results</h1>
             <div style={{ fontFamily: 'Proxima' }}>
-              {result.length == 0 && <p> No records found!</p>}
+              {result.length === 0 && <p> No records found!</p>}
 
               {result.length > 0 &&
                 result.map((r) => {
+                  console.log(r);
                   return (
                     <p>
                       {' '}
                       Here is the link to
                       <a
-                        href="#"
+                        href={r}
                         onClick={() => {
                           onButtonClick(r);
                         }}

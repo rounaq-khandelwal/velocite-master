@@ -16,7 +16,12 @@ import './Login.scss';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
@@ -44,16 +49,17 @@ export default function SignInSide() {
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
-        className='grid-appside'
+          className="grid-appside"
           item
           xs={false}
           sm={4}
           md={7}
           sx={{
-           
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -68,17 +74,26 @@ export default function SignInSide() {
               alignItems: 'center',
             }}
           >
-               <Typography component="h1" variant="h5" sx={{fontFamily:'Proxima-boldHeading'}}>
-              Velocite
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{ fontFamily: 'Proxima-boldHeading' }}
+            >
+              BrainIntelCorp
             </Typography>
             <Avatar sx={{ m: 1, bgcolor: 'primary' }}>
               <LockOutlinedIcon />
             </Avatar>
-         
+
             <Typography component="h3" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required

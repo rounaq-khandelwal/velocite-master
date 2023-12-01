@@ -27,9 +27,12 @@
 
 .para {
   text-align: center;
+  font-family: 'Proxima';
 }
 
 .button {
+  font-family: 'Proxima';
+  cursor: pointer;
   margin: 20px auto;
   display: block;
   height: 32px;
@@ -87,13 +90,15 @@
 }
 
 .button-secondary {
-  @include buttonSecondary
+  font-family: 'Proxima';
+  cursor: pointer;
+  @include buttonSecondary;
 }
 
 .myBox {
   border: none;
   padding: 5px;
-  font-family: "Proxima";
+  font-family: 'Proxima';
   width: 300px;
   height: 220px;
   overflow: scroll;
@@ -103,9 +108,10 @@
 .myRecordScrollBox {
   border: none;
   padding: 5px;
-  font-family: "Proxima";
+  font-family: 'Proxima';
   width: 300px;
   height: 220px;
+  align-self: center;
 }
 
 .marquee {
@@ -113,7 +119,7 @@
 }
 
 .marqueeText {
-  margin-top: 35%;
+  margin-top: 10%;
 }
 
 ::-webkit-scrollbar {
@@ -122,15 +128,21 @@
 }
 
 ::-webkit-scrollbar-track {
-  border: 1px solid #333E5B;
+  border: 1px solid #333e5b;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333E5B;
+  background: #333e5b;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #333E5B;
+  background: #333e5b;
+}
+.para2 {
+  // font-weight: bold;
+  // font-style: italic;
+  margin-bottom: 1rem;
+  text-align: center;
 }
