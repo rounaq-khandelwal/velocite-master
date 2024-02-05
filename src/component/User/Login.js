@@ -147,7 +147,7 @@ const Login = () => {
               {' '}
               {config.loginAccount} <a href="#">{config.loginContactUS}</a>
             </div>
-            <Footer style="75px" />
+            {/* <Footer style="75px" /> */}
           </Grid>
         ) : page === 'signup' ? (
           <Registration setPage={setPage} />

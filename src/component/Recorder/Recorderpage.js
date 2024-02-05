@@ -6,6 +6,7 @@ import './RecorderPage.scss';
 import { useEffect, useState } from 'react';
 import AWS from 'aws-sdk';
 import Header from '../Header/Header';
+import Footer from './Footer.js';
 
 let mediaRecorder;
 let audioCtx;
@@ -26,9 +27,9 @@ function RecorderPage() {
 
   const [streamData, setStreamData] = useState();
 
-  var albumBucketName = 'testing-react-app-bic';
-  var bucketRegion = 'ap-south-1';
-  var IdentityPoolIdt = 'ap-south-1:51ca1785-dd61-4db1-8958-7463e1b16b5f';
+  var albumBucketName = 'wav-directory';
+  var bucketRegion = 'us-east-1';
+  var IdentityPoolIdt = 'us-east-1:3800b6bb-b0af-4093-bd6c-d136afcf3fbb';
 
   AWS.config.region = bucketRegion; // Region
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -47,6 +48,8 @@ function RecorderPage() {
     apiVersion: '2012-10-17',
     params: { Bucket: albumBucketName },
   });
+  // const mimeType = audioRecorder.mediaRecorder.mimeType; // Check if this indeed is 'audio/wav'
+  // const mediaRecorder =
 
   useEffect(() => {
     if (navigator.mediaDevices.getUserMedia()) {
@@ -55,7 +58,7 @@ function RecorderPage() {
       let chunks = [];
 
       let onSuccess = function (stream) {
-        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/wav' });
 
         setStreamData(stream);
 
@@ -302,7 +305,7 @@ function RecorderPage() {
   };
 
   return (
-    <div className="App">
+    <div className="App" style={{ paddingBottom: '80px', overflowY: 'auto' }}>
       <Header />
       {/* first page */}
       {state.startAnalysis ? (
@@ -341,8 +344,8 @@ function RecorderPage() {
             <div
               style={{
                 // border: "1px solid #000" ,
-                margin: '20px auto',
-                padding: '25px 25px 0px',
+                margin: '10px auto',
+                padding: '15px 15px 0px',
               }}
             >
               {state.recording ? (
@@ -366,7 +369,7 @@ function RecorderPage() {
                   <canvas
                     className="visualizer"
                     height="35px"
-                    style={{ margin: '20px auto' }}
+                    style={{ margin: '15px auto' }}
                   ></canvas>
                   <button
                     className="button"
@@ -473,6 +476,7 @@ function RecorderPage() {
           <div></div>
         </div>
       ) : null}
+      <Footer />
     </div>
   );
 }

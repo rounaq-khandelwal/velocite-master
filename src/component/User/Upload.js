@@ -5,9 +5,12 @@ import AWS from 'aws-sdk';
 // var bucketRegion = "us-east-1";
 // var IdentityPoolId = "us-east-1:e2ae7738-2b59-4830-884c-ed0565282451";
 
-var albumBucketName = 'testing-react-app-bic';
-var bucketRegion = 'ap-south-1';
-var IdentityPoolId = ' ap-south-1:51ca1785-dd61-4db1-8958-7463e1b16b5f';
+// var albumBucketName = 'testing-react-app-bic';
+// var bucketRegion = 'ap-south-1';
+// var IdentityPoolId = ' ap-south-1:51ca1785-dd61-4db1-8958-7463e1b16b5f';
+var albumBucketName = 'wav-directory';
+var bucketRegion = 'us-east-1';
+var IdentityPoolId = 'us-east-1:3800b6bb-b0af-4093-bd6c-d136afcf3fbb';
 
 console.log('I AM HERE PLEASE EHLP');
 AWS.config.region = bucketRegion; // Region
